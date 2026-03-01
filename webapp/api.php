@@ -15,6 +15,8 @@ ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/ytdl_helper.php';
 
 use Flatgreen\Ytdl\Options;
 use Flatgreen\Ytdl\Ytdl;
@@ -143,15 +145,19 @@ $action = $_GET['action'] ?? $_POST['action'] ?? '';
 // action=check : verify yt-dlp/youtube-dl availability
 // --------------------------------------------------------------------------
 if ($action === 'check') {
+    $resolvedExec = resolveYtdlExec();
+
     $options = new Options();
-    $ytdl    = new Ytdl($options);
+    $ytdl    = $resolvedExec !== '' ? new Ytdl($options, null, $resolvedExec) : new Ytdl($options);
     $exec    = $ytdl->getYtdlExecPath();
     $name    = $ytdl->getYtdlExecName();
 
     if (empty($exec)) {
         echo json_encode([
             'available' => false,
-            'message'   => 'Neither yt-dlp nor youtube-dl was found in PATH.',
+            'message'   => 'Neither yt-dlp nor youtube-dl was found. '
+                         . 'Install yt-dlp and ensure it is in PATH, '
+                         . 'or set YTDLP_EXEC in webapp/config.php.',
         ]);
     } else {
         echo json_encode([
@@ -193,8 +199,9 @@ if ($action === 'info') {
     }
 
     try {
+        $exec    = resolveYtdlExec();
         $options = new Options();
-        $ytdl    = new Ytdl($options);
+        $ytdl    = $exec !== '' ? new Ytdl($options, null, $exec) : new Ytdl($options);
         $ytdl->setCache(['directory' => $cacheDir, 'duration' => 3600]);
 
         $info = $ytdl->extractInfos($url);

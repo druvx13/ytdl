@@ -17,6 +17,8 @@ ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/ytdl_helper.php';
 
 use Flatgreen\Ytdl\Options;
 use Flatgreen\Ytdl\Ytdl;
@@ -101,7 +103,8 @@ if ($audioOnly) {
 set_time_limit(0);
 ignore_user_abort(false);
 
-$ytdl = new Ytdl($options);
+$ytdlExec = resolveYtdlExec();
+$ytdl = $ytdlExec !== '' ? new Ytdl($options, null, $ytdlExec) : new Ytdl($options);
 $ytdl->setCache(['directory' => $cacheDir, 'duration' => 3600]);
 
 try {

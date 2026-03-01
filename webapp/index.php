@@ -472,10 +472,11 @@ noscript{display:block;padding:12px 16px;background:#3b2a0a;border:1px solid #78
     .then(d => {
       if (!d.available) {
         banner.innerHTML = `<div class="container"><div class="alert alert-error">
-          <strong>⚠ yt-dlp not found:</strong> Neither <code>yt-dlp</code> nor <code>youtube-dl</code>
-          is installed on this server. Please install
-          <a href="https://github.com/yt-dlp/yt-dlp#installation" target="_blank" rel="noopener">yt-dlp</a>
-          and make sure it is in your <code>PATH</code>.
+          <strong>⚠ yt-dlp not found:</strong>
+          Install <a href="https://github.com/yt-dlp/yt-dlp#installation" target="_blank" rel="noopener">yt-dlp</a>
+          on this server, then either add its directory to Apache's PATH or set
+          <code>YTDLP_EXEC</code> to the full executable path in <code>webapp/config.php</code>
+          (e.g. <code>/usr/local/bin/yt-dlp</code>).
         </div></div>`;
       }
     })
