@@ -15,3 +15,6 @@ webapp/cache/[^.]*
 !webapp/cache/.htaccess
 # Allow webapp/vendor/ to be committed (pre-included dependencies)
 !webapp/vendor/
+# Always commit the bundled yt-dlp binary
+!webapp/bin/yt-dlp
+!webapp/bin/yt-dlp.exe
