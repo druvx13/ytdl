@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Flatgreen\Ytdl\Options;
-use Flatgreen\Ytdl\Ytdl;
+use Flatgreen\ytdl\src\Options;
+use Flatgreen\ytdl\src\Ytdl;
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
