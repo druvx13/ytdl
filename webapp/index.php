@@ -472,11 +472,13 @@ noscript{display:block;padding:12px 16px;background:#3b2a0a;border:1px solid #78
     .then(d => {
       if (!d.available) {
         banner.innerHTML = `<div class="container"><div class="alert alert-error">
-          <strong>⚠ yt-dlp not found:</strong>
-          Install <a href="https://github.com/yt-dlp/yt-dlp#installation" target="_blank" rel="noopener">yt-dlp</a>
-          on this server, then either add its directory to Apache's PATH or set
-          <code>YTDLP_EXEC</code> to the full executable path in <code>webapp/config.php</code>
-          (e.g. <code>/usr/local/bin/yt-dlp</code>).
+          <strong>⚠ yt-dlp not found.</strong>
+          On shared hosting, download the
+          <a href="https://github.com/yt-dlp/yt-dlp/releases/latest" target="_blank" rel="noopener">yt-dlp binary</a>
+          and upload it to <code>bin/yt-dlp</code> inside this webapp folder
+          (set file permissions to 755 via your file manager or <code>chmod +x</code> over SSH).
+          On a VPS/dedicated server, install yt-dlp system-wide or set
+          <code>YTDLP_EXEC</code> in <code>config.php</code>.
         </div></div>`;
       }
     })
