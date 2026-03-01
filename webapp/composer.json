@@ -1,0 +1,20 @@
+{
+    "name": "ytdl/webapp",
+    "description": "YouTube Video Downloader Web Application",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.4",
+        "flatgreen/ytdl": "*"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../"
+        }
+    ],
+    "autoload": {
+        "psr-4": {}
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -7,3 +7,11 @@ vendor/
 "examples/data/"
 .vscode/
 composer.lock
+
+# webapp — exclude runtime dirs but commit pre-installed vendor
+webapp/downloads/*/
+webapp/cache/[^.]*
+!webapp/downloads/.htaccess
+!webapp/cache/.htaccess
+# Allow webapp/vendor/ to be committed (pre-included dependencies)
+!webapp/vendor/

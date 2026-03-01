@@ -1,0 +1,21 @@
+# ============================================================
+#  webapp/downloads/.htaccess
+#  Deny ALL direct web access to this directory.
+#  Files here are served exclusively through download.php.
+# ============================================================
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
+
+# Also block via rewrite as a belt-and-suspenders measure
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [F,L]
+</IfModule>
+
+Options -Indexes

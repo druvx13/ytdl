@@ -1,0 +1,8 @@
+# Runtime directories — do not commit downloaded files or cached data
+downloads/*/
+cache/[^.]*
+# But keep the .htaccess and .gitkeep sentinels
+!downloads/.htaccess
+!downloads/.gitkeep
+!cache/.htaccess
+!cache/.gitkeep
