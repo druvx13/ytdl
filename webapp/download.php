@@ -11,6 +11,11 @@
 
 declare(strict_types=1);
 
+// Prevent any PHP warnings/notices from corrupting the file stream,
+// regardless of the server's php.ini (no .htaccess required).
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Flatgreen\Ytdl\Options;
@@ -21,7 +26,8 @@ header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 
 // ── Input validation ─────────────────────────────────────────────────────────
-function abort(string $msg, int $code = 400): never
+// Note: void used instead of never for PHP 7.4/8.0 compatibility (never = PHP 8.1+)
+function abort(string $msg, int $code = 400): void
 {
     http_response_code($code);
     header('Content-Type: text/plain; charset=utf-8');
@@ -100,7 +106,7 @@ $ytdl->setCache(['directory' => $cacheDir, 'duration' => 3600]);
 
 try {
     $infoDict = $ytdl->download($url, $dlDir);
-} catch (Exception $e) {
+} catch (\Throwable $e) {
     cleanup($dlDir);
     abort('Download failed: ' . $e->getMessage(), 500);
 }

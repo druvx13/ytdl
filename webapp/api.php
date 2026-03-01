@@ -9,10 +9,15 @@
 
 declare(strict_types=1);
 
+// Prevent any PHP warnings/notices from appearing in the JSON response,
+// regardless of the server's php.ini (no .htaccess required).
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Flatgreen\ytdl\src\Options;
-use Flatgreen\ytdl\src\Ytdl;
+use Flatgreen\Ytdl\Options;
+use Flatgreen\Ytdl\Ytdl;
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
@@ -249,7 +254,7 @@ if ($action === 'info') {
         }
 
         echo json_encode($response);
-    } catch (Exception $e) {
+    } catch (\Throwable $e) {
         jsonError('Server error: ' . $e->getMessage(), 500);
     }
     exit;
