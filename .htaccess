@@ -1,0 +1,40 @@
+# ============================================================
+#  Root .htaccess
+#  If the repository root itself is served as a web root,
+#  this file protects library files and redirects to the webapp.
+# ============================================================
+
+# ── Block direct access to library source and tests ───────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect bare root to webapp
+    RewriteRule ^$ webapp/ [R=302,L]
+
+    # Block access to src/, tests/, examples/ directories
+    RewriteRule ^(src|tests|examples)(/|$) - [F,L]
+
+    # Block access to config / meta files
+    RewriteRule ^(composer\.(json|lock)|\.gitignore|CHANGELOG\.md|LICENSE|README\.md)$ - [F,L]
+</IfModule>
+
+Options -Indexes
+
+# ── Protect sensitive files ───────────────────────────────────────────────────
+<FilesMatch "^(\.htaccess|\.htpasswd|composer\.(json|lock)|\.gitignore|\.env)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ── Security headers ──────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options        "DENY"
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>

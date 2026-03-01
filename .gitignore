@@ -7,3 +7,14 @@ vendor/
 "examples/data/"
 .vscode/
 composer.lock
+
+# webapp — exclude runtime dirs but commit pre-installed vendor
+webapp/downloads/*/
+webapp/cache/[^.]*
+!webapp/downloads/.htaccess
+!webapp/cache/.htaccess
+# Allow webapp/vendor/ to be committed (pre-included dependencies)
+!webapp/vendor/
+# Always commit the bundled yt-dlp binary
+!webapp/bin/yt-dlp
+!webapp/bin/yt-dlp.exe
